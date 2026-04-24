@@ -1,0 +1,11 @@
+.DS_Store
+
+server/.env
+server/node_modules
+server/dist
+
+frontend/node_modules
+frontend/.output
+frontend/.wxt
+frontend/stats.html
+frontend/stats-*.json
