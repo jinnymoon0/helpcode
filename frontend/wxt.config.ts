@@ -10,7 +10,8 @@ export default defineConfig({
     host_permissions: [
       "*://leetcode.com/problems/*",
       "*://www.leetcode.com/problems/*",
-      "http://localhost:8787/*"
+      "http://localhost:8787/*",
+      "https://helpcode-api.vercel.app/*"
     ]
   }
 })
