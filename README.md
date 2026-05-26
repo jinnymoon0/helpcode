@@ -1,47 +1,104 @@
 # helpcode
 
-helpcode is a browser extension that appears on LeetCode problem pages and gives hints without revealing full solutions.
+helpcode is a Chrome extension that appears on LeetCode problems and gives guided hints without revealing full answers.
 
-## Project Structure
+Download: [https://helpcode-download.vercel.app](https://helpcode-download.vercel.app)
 
-- `frontend/`: WXT + React Chrome extension
-- `server/`: Express API that calls Hugging Face
+## Product Experience
 
-## Development
+Users do not need to configure API keys or run local servers.
 
-Run the backend:
+1. User downloads the extension from your website.
+2. User loads the extension in Chrome.
+3. User opens a LeetCode problem page.
+4. helpcode injects a floating panel and answers questions with hints.
+5. Extension calls your hosted API (`helpcode-api.vercel.app`).
 
-```bash
-cd server
-npm run dev
+## Stack
+
+- Frontend extension: React + TypeScript + WXT (Manifest V3)
+- API backend: Node.js + Express
+- AI provider: Hugging Face Router API
+- Hosting: Vercel (download website and API deployment)
+- Source control: Git + GitHub
+
+## Repository Layout
+
+```txt
+helpcode/
+├── frontend/   # extension code
+├── server/     # API backend
+└── site/       # download website
 ```
 
-Run the extension:
+## How The App Works
+
+1. Content script runs on `leetcode.com/problems/*`.
+2. It scans problem title/description and renders the helpcode panel.
+3. User submits a question.
+4. Frontend posts `{ title, description, question }` to your hosted `/api/hint`.
+5. Backend calls Hugging Face with a hint-only system prompt.
+6. Backend returns concise hints; on failure, it returns a safe fallback hint.
+
+## Production Deploy (No User Setup Required)
+
+### A) Deploy API to Vercel
+
+Deploy `server` as a Vercel Node service and set env vars:
+
+- `HF_TOKEN`: your Hugging Face token
+- `PORT`: optional (Vercel usually handles this)
+
+After deploy, your API URL should be:
+
+`https://helpcode-api.vercel.app`
+
+The extension is configured to call:
+
+`https://helpcode-api.vercel.app/api/hint`
+
+### B) Build Extension Zip
 
 ```bash
 cd frontend
-npm run dev
-```
-
-Build the extension:
-
-```bash
-cd frontend
+npm install
 npm run build
-```
-
-Create a zip for distribution:
-
-```bash
-cd frontend
 npm run zip
 ```
 
-## Environment
+Output zip is in `frontend/.output/`.
 
-Create `server/.env`:
+### C) Publish Download Website
 
 ```bash
-HF_TOKEN=your_hugging_face_token
-PORT=8787
+cp frontend/.output/*.zip site/helpcode.zip
+cd site
+npx vercel --prod
 ```
+
+Your public download page:
+[https://helpcode-download.vercel.app](https://helpcode-download.vercel.app)
+
+## Local Development
+
+For local debugging:
+
+```bash
+cd server
+npm install
+npm run dev
+```
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+In dev mode, frontend tries localhost first, then production API.
+
+## Security Notes
+
+- Keep `HF_TOKEN` only on server-side environment variables.
+- Never expose tokens in extension code.
+- Keep `server/.env` out of git.
