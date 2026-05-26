@@ -1,10 +1,45 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>helpcode Downloads</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; background: #f6f7fb; color: #111; }
+        .wrap { max-width: 760px; margin: 60px auto; padding: 24px; background: white; border-radius: 12px; }
+        h1 { margin-top: 0; }
+        .btn { display: inline-block; padding: 12px 16px; background: #111; color: #fff; text-decoration: none; border-radius: 8px; margin-right: 8px; margin-bottom: 8px; }
+        .muted { color: #555; }
+        ol { line-height: 1.7; }
+        code { background: #f0f0f0; padding: 2px 6px; border-radius: 6px; }
+    </style>
 </head>
 <body>
-$END$
+<div class="wrap">
+    <h1>helpcode Downloads</h1>
+    <p>LeetCode hint helper extension (hints only, no full answers).</p>
+
+    <p>
+        <a class="btn" href="./helpcode-chrome.zip" download>Download for Chrome</a>
+        <a class="btn" href="./helpcode-safari.zip" download>Download for Safari</a>
+    </p>
+    <p class="muted">If Safari download is unavailable, use the Chrome download and follow Safari conversion instructions below.</p>
+
+    <h2>Install in Chrome</h2>
+    <ol>
+        <li>Download <code>helpcode-chrome.zip</code> and unzip it.</li>
+        <li>Open <code>chrome://extensions</code>.</li>
+        <li>Enable <strong>Developer mode</strong>.</li>
+        <li>Click <strong>Load unpacked</strong> and select the unzipped folder.</li>
+    </ol>
+
+    <h2>Install in Safari (macOS)</h2>
+    <ol>
+        <li>Download <code>helpcode-safari.zip</code> and unzip it.</li>
+        <li>Open the included <code>.xcodeproj</code> in Xcode and set your signing Team.</li>
+        <li>Run the macOS app target once from Xcode (<code>Cmd + R</code>).</li>
+        <li>In Safari, open Settings -> Extensions and enable <strong>helpcode Extension</strong>.</li>
+    </ol>
+</div>
 </body>
 </html>
