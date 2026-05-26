@@ -1,6 +1,6 @@
 # helpcode
 
-helpcode is a Chrome extension that appears on LeetCode problems and gives guided hints without revealing full answers.
+helpcode is a browser extension for Chrome and Safari that appears on LeetCode problems and gives guided hints without revealing full answers.
 
 Download: [https://helpcode-download.vercel.app](https://helpcode-download.vercel.app)
 
@@ -9,7 +9,7 @@ Download: [https://helpcode-download.vercel.app](https://helpcode-download.verce
 Users do not need to configure API keys or run local servers.
 
 1. User downloads the extension from your website.
-2. User loads the extension in Chrome.
+2. User loads the extension in Chrome or Safari.
 3. User opens a LeetCode problem page.
 4. helpcode injects a floating panel and answers questions with hints.
 5. Extension calls your hosted API (`helpcode-api.vercel.app`).
@@ -17,6 +17,7 @@ Users do not need to configure API keys or run local servers.
 ## Stack
 
 - Frontend extension: React + TypeScript + WXT (Manifest V3)
+- Safari packaging: Safari Web Extension Converter + Xcode
 - API backend: Node.js + Express
 - AI provider: Hugging Face Router API
 - Hosting: Vercel (download website and API deployment)
@@ -57,7 +58,7 @@ The extension is configured to call:
 
 `https://helpcode-api.vercel.app/api/hint`
 
-### B) Build Extension Zip
+### B) Build Chrome Extension Zip
 
 ```bash
 cd frontend
@@ -67,11 +68,26 @@ npm run zip
 ```
 
 Output zip is in `frontend/.output/`.
+Rename/copy it as `site/helpcode-chrome.zip`.
 
-### C) Publish Download Website
+### C) Build Safari Package
+
+Use converter on the built Chrome extension output:
 
 ```bash
-cp frontend/.output/*.zip site/helpcode.zip
+xcrun safari-web-extension-converter /Users/jinnymoon/Documents/proj/helpcode/frontend/.output/chrome-mv3 --project-location /Users/jinnymoon/Documents/proj/helpcode/safari-project
+```
+
+Then in Xcode:
+
+1. Open generated `.xcodeproj`.
+2. Set Signing Team for app + extension targets.
+3. Build and archive/export your Safari app package.
+4. Add downloadable artifact to `site/helpcode-safari.zip`.
+
+### D) Publish Download Website
+
+```bash
 cd site
 npx vercel --prod
 ```
